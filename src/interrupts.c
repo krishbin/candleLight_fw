@@ -259,4 +259,127 @@ const pFunc InterruptVectorTable[48] = {
 	0,                    /* CEC                          */
 	// don't need to define any interrupts after this one
 };
+#elif defined(STM32G4)
+__attribute__((used, section(".vectors")))
+const pFunc InterruptVectorTable[] = {
+	(pFunc)(&__StackTop), // initial stack pointer
+	Reset_Handler,        // reset handler
+	NMI_Handler,          // -14: NMI
+	HardFault_Handler,    // -13: HardFault
+	0,                    // -12: MemManage_Handler
+	0,                    // -11: BusFault_Handler
+	0,                    // -10: UsageFault_Handler
+	0,                    //
+	0,                    //
+	0,                    //
+	0,                    //
+	0,                    // -5: SVC_Handler
+	0,                    // -4: DebugMon_Handler
+	0,                    //
+	0,                    // -2: PendSV
+	SysTick_Handler,      // -1: SysTick
+// External Interrupts
+	0,                    /* Window WatchDog              */
+	0,                    /* PVD through EXTI Line detect */
+	0,                    /* RTC through the EXTI line 19    */
+	0,                    /* RTC Wakeup through the EXTI line 20    */
+	0,                    /* FLASH                        */
+	0,                    /* RCC & CRS                    */
+	0,                    /* EXTI Line 0             */
+	0,                    /* EXTI Line 1             */
+	0,                    /* EXTI Line 2             */
+	0,                    /* EXTI Line 3             */
+	0,                    /* EXTI Line 4             */
+	0,                    /* DMA1 Channel 1               */
+	0,                    /* DMA1 Channel 2  */
+	0,                    /* DMA1 Channel 3  */
+	0,                    /* DMA1 Channel 4  */
+	0,                    /* DMA1 Channel 6  */
+	0,                    /* DMA1 Channel 7  */
+	0,                    /* ADC1, ADC2          */
+	USB_Handler,          /* USB_HP          */
+	0,                    /* USB_LP          */
+	0,                    /* FDCAN1_IT0                         */
+	0,                    /* FDCAN1_IT1                         */
+	0,                    /* EXTI9_5                         */
+	0,                    /* TIM1 Break/TIM15 global */
+	0,                    /* TIM1 update/TIM16 global         */
+	0,                    /* TIM1 trigger and commutation/TIM17/TIM1 direction change/TIM1 Index         */
+	0,                    /* TIM1 capture compare                         */
+	0,                    /* TIM2                         */
+	0,                    /* TIM3                         */
+	0,                    /* TIM4                         */
+	0,                    /* I2C1_EV                         */
+	0,                    /* I2C1_ER                         */
+	0,                    /* I2C2_EV                         */
+	0,                    /* I2C2_ER                         */
+	0,                    /* SPI1                         */
+	0,                    /* SPI2                         */
+	0,                    /* USART1                       */
+	0,                    /* USART2                       */
+	0,                    /* USART3                       */
+	0,                    /* EXTI15_10                       */
+	0,                    /* RTC_ALARM                       */
+	0,                    /* USBWakeUp                   */
+	0,                    /* TIM8 break/TIM8 transition/TIM8 index         */
+	0,                    /* TIM8 update                       */
+	0,                    /* TIM8 trigger and commutation/TIM8 direction change/TIM8 index                       */
+	0,                    /* TIM8  capture compare             */
+	0,                    /* ADC3 global                        */
+	0,                    /* FSMC global                        */
+	0,                    /* LPTIM1                         */
+	0,                    /* TIM5                         */
+	0,                    /* SPI3                         */
+	0,                    /* UART4                         */
+	0,                    /* UART5                         */
+	0,                    /* TIM5_DACUNDER                         */
+	0,                    /* TIM6_DACUNDER                         */
+	0,                    /* DMA2_CH1                         */
+	0,                    /* DMA2_CH2                         */
+	0,                    /* DMA2_CH3                         */
+	0,                    /* DMA2_CH4                         */
+	0,                    /* DMA2_CH5                         */
+	0,                    /* ADC4                         */
+	0,                    /* ADC5                         */
+	0,                    /* UCPD1 global                         */
+	0,                    /* COMP1_2_3                         */
+	0,                    /* COMP4_5_6                         */
+	0,                    /* COMP7                         */
+	0,                    /* HRTIM_Master_IRQn                         */
+	0,                    /* HRTIM_TIMA_IRQn                         */
+	0,                    /* HRTIM_TIMB_IRQn                         */
+	0,                    /* HRTIM_TIMC_IRQn                         */
+	0,                    /* HRTIM_TIMD_IRQn                         */
+	0,                    /* HRTIM_TIME_IRQn                         */
+	0,                    /* HRTIM_TIM_FLT_IRQn                         */
+	0,                    /* HRTIM_TIMF_IRQn                         */
+	0,                    /* CRS                         */
+	0,                    /* SAI                         */
+	0,                    /* TIM20 break/TIM20 transition error/TIM20 index                         */
+	0,                    /* TIM20 update                         */
+	0,                    /* TIM20 trigger and commutation/TIM20 direction change/TIM20 index                         */
+	0,                    /* TIM20 capture                         */
+	0,                    /* Floating point                   */
+	0,                    /*  I2C4 event and EXTI line 42                  */
+	0,                    /*  I2C4 error                  */
+	0,                    /* SPI4                         */
+	0,                    /* AES                   */
+	0,                    /* FDCAN2 IT0                          */
+	0,                    /* FDCAN2 IT1                          */
+	0,                    /* FDCAN3 IT0                          */
+	0,                    /* FDCAN3 IT1                          */
+	0,                    /* RNG                          */
+	0,                    /* LPUART                          */
+	0,                    /* I2C3 event and EXTI line 27                          */
+	0,                    /* I2C3 error                          */
+	0,                    /* DMAMUX                          */
+	0,                    /* QUADSPI                          */
+	0,                    /* DMA1 chnl 8                          */
+	0,                    /* DMA2 chnl 6                          */
+	0,                    /* DMA2 chnl 7                          */
+	0,                    /* DMA2 chnl 8                          */
+	0,                    /* Cordic                          */
+	0,                    /* FMAC                          */
+	// don't need to define any interrupts after this one
+};
 #endif

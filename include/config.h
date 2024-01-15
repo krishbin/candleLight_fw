@@ -357,6 +357,17 @@ THE SOFTWARE.
 	#define NUM_CAN_CHANNEL			 1
 	#define CONFIG_CANFD			 1
 
+#elif defined(BOARD_magic_carpet)
+	#define USBD_PRODUCT_STRING_FS	 (uint8_t*) "magic_carpet gs_usb"
+	#define USBD_MANUFACTURER_STRING (uint8_t*) "magic_carpet"
+	#define DFU_INTERFACE_STRING_FS	 (uint8_t*) "magic_carpet firmware upgrade interface"
+
+	#define TIM2_CLOCK_SPEED		 170000000
+
+	#define CAN_CLOCK_SPEED			 170000000
+	#define NUM_CAN_CHANNEL			 1
+	#define CONFIG_CANFD			 1
+
 #elif defined(BOARD_STM32F4_DevBoard)
 	#define USBD_PRODUCT_STRING_FS	 (uint8_t*) "STM32F4VE Dev Board"
 	#define USBD_MANUFACTURER_STRING (uint8_t*) "misc"

@@ -27,7 +27,11 @@ THE SOFTWARE.
 #include "board.h"
 #include "can.h"
 #include "hal_include.h"
+#if defined(STM32G0)
 #include "stm32g0b1xx.h"
+#elif defined(STM32G4)
+#include "stm32g4xx.h"
+#endif
 #include "timer.h"
 
 // bit timing constraints

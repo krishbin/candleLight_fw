@@ -38,6 +38,8 @@ THE SOFTWARE.
 typedef struct {
 #if defined(STM32G0)
 	FDCAN_HandleTypeDef channel;
+#elif defined(STM32G4)
+	FDCAN_HandleTypeDef channel;
 #else
 	CAN_TypeDef *instance;
 #endif
@@ -55,6 +57,8 @@ extern const struct gs_device_bt_const CAN_btconst;
 extern const struct gs_device_bt_const_extended CAN_btconst_ext;
 
 #if defined(STM32G0)
+void can_init(can_data_t *channel, FDCAN_GlobalTypeDef *instance);
+#elif defined(STM32G4)
 void can_init(can_data_t *channel, FDCAN_GlobalTypeDef *instance);
 #else
 void can_init(can_data_t *channel, CAN_TypeDef *instance);

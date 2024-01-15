@@ -27,6 +27,7 @@ add_compile_options(
 set(CPUFLAGS_F0 -mcpu=cortex-m0)
 set(CPUFLAGS_F4 -mcpu=cortex-m4)
 set(CPUFLAGS_G0 -mcpu=cortex-m0)
+set(CPUFLAGS_G4 -mcpu=cortex-m4)
 
 add_link_options(
 	--specs=nano.specs
@@ -202,6 +203,14 @@ populate_ldscript(CPU_FAMILY STM32G0B1XK
 	HEAP_SIZE 1k
 )
 
+populate_ldscript(CPU_FAMILY STM32G473xB
+	FLASH_START 0x08000000
+	FLASH_SIZE 128k
+	RAM_START 0x20000000
+	RAM_SIZE 128k
+	STACK_SIZE 2k
+	HEAP_SIZE 1k
+)
 ######### commands for adding each target have a lot in common: make helper func.
 # Split into two categories, F042-based and F072-based.
 
@@ -260,12 +269,24 @@ function(add_g0b1_target TGTNAME)
 	target_link_libraries(${TGTNAME}_fw PRIVATE STM32_HAL_STM32G0B1xK STM32_USB_Device_Library_STM32G0B1xK)
 endfunction()
 
+function(add_g473_target TGTNAME)
+	add_target_common(${TGTNAME} STM32G473xB)
+	target_compile_definitions(${TGTNAME}_fw PRIVATE BOARD_${TGTNAME} STM32G4)
+	target_compile_options(${TGTNAME}_fw BEFORE PRIVATE ${CPUFLAGS_G4})
+	target_sources(${TGTNAME}_fw PRIVATE "src/boards/g473-${TGTNAME}.c")
+	target_sources(${TGTNAME}_fw PRIVATE "src/can/m_can.c")
+	target_sources(${TGTNAME}_fw PRIVATE "src/device/device_g4.c")
+	target_link_options(${TGTNAME}_fw BEFORE PRIVATE ${CPUFLAGS_G4})
+	target_link_libraries(${TGTNAME}_fw PRIVATE STM32_HAL_STM32G473xB STM32_USB_Device_Library_STM32G473xB)
+endfunction()
+
 ########## generate list of targets.
 # the "_fw" part is appended automatically
 set(TGTF042_LIST "cantact" "canalyze" "canable" "usb2can" "cannette")
 set(TGTF072_LIST "candleLight" "CANable_MKS" "CONVERTDEVICE_xCAN" "DSD_TECH_SH_C30A" "FYSETC_UCAN")
 set(TGTF407_LIST "STM32F4_DevBoard")
-set(TGTG0B1_LIST "budgetcan" "CONVERTDEVICE_xCANFD" "nucleo_g0b1re" "candleLightFD")
+set(TGTG0B1_LIST "budgetcan")
+set(TGTG473_LIST "magic_carpet")
 
 foreach (TGTNAME IN LISTS TGTF042_LIST)
 	option(BUILD_${TGTNAME} "Build firmware for \"${TGTNAME}\" (default=yes)" ON)
@@ -292,6 +313,13 @@ foreach (TGTNAME IN LISTS TGTG0B1_LIST)
 	option(BUILD_${TGTNAME} "Build firmware for \"${TGTNAME}\" (default=yes)" ON)
 	if (BUILD_${TGTNAME})
 		add_g0b1_target(${TGTNAME})
+	endif()
+endforeach()
+
+foreach (TGTNAME IN LISTS TGTG473_LIST)
+	option(BUILD_${TGTNAME} "Build firmware for \"${TGTNAME}\" (default=yes)" ON)
+	if (BUILD_${TGTNAME})
+		add_g473_target(${TGTNAME})
 	endif()
 endforeach()
 
